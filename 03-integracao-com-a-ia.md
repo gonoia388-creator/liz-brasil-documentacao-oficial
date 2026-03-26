@@ -4,59 +4,53 @@
 
 ## Visão geral
 
-A Liz integra a camada de IA por meio de personas especializadas e de uma camada serverless voltada a operações controladas. O sistema trabalha com instruções de identidade, contexto da conversa, modo ativo e histórico recente.
+A Liz organiza sua experiência de IA por meio de modos internos, personas e instruções contextuais. O sistema combina identidade da assistente, contexto recente e objetivo da interação para produzir respostas coerentes com a proposta do produto.
 
-## Caminho principal de integração
+## Núcleo de interação
 
-### Bridge no navegador
+O arquivo `bin/liz-sdk.js` atua como um núcleo de coordenação entre a interface principal e os modos internos da Liz. Em termos funcionais, ele:
 
-O arquivo `bin/liz-sdk.js` funciona como um coordenador entre a aplicação principal e as personas. Ele:
+- seleciona o modo apropriado
+- encaminha a mensagem do usuário
+- organiza o contexto da interação
+- devolve a resposta para a camada visual
 
-- instancia a persona adequada
-- envia mensagens e contexto
-- recebe eventos de resposta
-- devolve o resultado para a interface principal
+## Modos internos da Liz
 
-### Personas especializadas
+Os arquivos em `bin/liz/` representam variações internas da experiência da Liz. Esses módulos permitem separar comportamentos por perfil de uso, profundidade de resposta e recursos especializados.
 
-As personas HTML em `bin/liz/` carregam identidade, comportamento e parâmetros próprios. Elas representam modos especializados da Liz, como:
+Exemplos de modos observáveis:
 
-- Liz principal
-- Liz Mini
-- Liz Imagina
+- modo principal
+- modo compacto
+- modo visual
 
-## Configuração do comportamento
+## Construção do contexto
 
-O comportamento da IA é montado em camadas:
+O comportamento da Liz é composto em camadas:
 
-1. identidade-base da persona
-2. instruções adicionadas pela aplicação
-3. histórico recente da conversa
-4. ajustes de modo, plano e contexto de uso
+1. identidade-base da assistente
+2. instruções contextuais do fluxo atual
+3. histórico recente de conversa
+4. ajustes de modo e experiência
 
-Essa composição permite que a Liz responda com consistência sem perder adaptação ao cenário atual do usuário.
+Esse modelo favorece consistência sem perder adaptação ao uso real.
 
-## Prompting e identidade
+## Identidade de resposta
 
-No código, a identidade da Liz é orientada por regras como:
+No projeto, a Liz é orientada para responder com:
 
 - clareza
-- profundidade equilibrada
-- objetividade
-- foco em resolver a necessidade do usuário
-- manutenção de tom humano e acolhedor
+- equilíbrio entre profundidade e objetividade
+- foco em utilidade prática
+- linguagem acolhedora
+- coerência com o português do Brasil
 
-## Processamento assíncrono
+## Processamento complementar
 
-Quando necessário, a aplicação utiliza uma função serverless de processamento para tarefas de resposta em segundo plano. Isso ajuda a manter a experiência estável mesmo em operações mais demoradas.
+Em fluxos mais longos ou mais sensíveis, a aplicação pode acionar rotinas internas de apoio para manter estabilidade, continuidade e segurança funcional.
 
-## Base de conhecimento
-
-Nesta versão documental, a Liz é descrita como uma aplicação orientada por personas, contexto e memória recente de conversa.
-
-Não há, neste material, detalhamento de mecanismos internos de armazenamento ou de plataformas externas específicas. O foco está na experiência funcional da IA e em como a aplicação organiza a interação com o usuário.
-
-## Exemplo conceitual de chamada
+## Exemplo conceitual de uso
 
 ```js
 const reply = await window.liz.chat({

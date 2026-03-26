@@ -37,12 +37,12 @@ A persona processa o pedido, aplica sua configuração e inicia a obtenção da 
 
 ### Etapa 6. Proteções de aplicação
 
-Quando o fluxo passa por funções serverless, entram em cena mecanismos como:
+Quando o fluxo passa pelas rotinas internas de apoio, entram em cena mecanismos como:
 
 - autenticação do usuário
 - validação rígida de payload
 - limitação de abuso por quota e rate limit
-- checagem de origem permitida
+- verificação de origem permitida
 - tratamento seguro de erros
 
 ### Etapa 7. Retorno ao frontend
@@ -68,7 +68,7 @@ Usuário -> Interface -> script.js -> liz-sdk.js -> Persona -> Função segura -
 
 Em tarefas mais longas, a aplicação pode usar processamento assíncrono. Nesse caso:
 
-1. a mensagem é enviada para uma função serverless
+1. a mensagem é enviada para uma rotina interna de processamento
 2. a função valida a requisição
 3. o processamento continua em segundo plano
 4. o resultado é devolvido depois para a interface

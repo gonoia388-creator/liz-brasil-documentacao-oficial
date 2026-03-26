@@ -4,22 +4,20 @@
 
 ## Classificação arquitetural
 
-A Liz Brasil segue uma arquitetura híbrida, composta por:
+A Liz Brasil segue uma arquitetura híbrida e modular, composta por:
 
-- frontend web estático com comportamento de aplicação rica
-- orquestração cliente em JavaScript
-- funções serverless para operações seguras e processamento assíncrono
-- personas especializadas executadas por bridge no navegador
+- frontend web com experiência de aplicação rica
+- camada de orquestração em JavaScript
+- serviços internos de apoio à execução
+- módulos especializados da Liz para diferentes modos de interação
 
-Essa topologia não é um monólito puro nem um conjunto clássico de microsserviços. A melhor definição para o estado atual do sistema é:
-
-**Frontend Web + Bridge de Personas + Camada Serverless**
+Essa topologia prioriza separação de responsabilidades, evolução incremental e controle operacional.
 
 ## Camadas principais
 
 ### 1. Camada de experiência
 
-Responsável pela interface que o usuário vê e utiliza no navegador.
+Responsável pela interface visível ao usuário, navegação, painéis, interações e apresentação do conteúdo.
 
 Arquivos centrais:
 
@@ -30,15 +28,15 @@ Arquivos centrais:
 
 ### 2. Camada de orquestração
 
-Responsável por sessão, eventos da interface, envio de mensagens, atualização de estado e integração com os recursos da Liz.
+Responsável por coordenar sessão, interface, mensagens, modos da Liz e atualização do estado da aplicação.
 
 Arquivo central:
 
 - `js/script.js`
 
-### 3. Camada de personas
+### 3. Camada de núcleo conversacional
 
-Responsável por encapsular comportamentos específicos da Liz, como persona principal, modo compacto e recursos visuais.
+Responsável por encapsular modos internos da Liz e adaptar o comportamento da experiência conforme persona, contexto e objetivo.
 
 Arquivos centrais:
 
@@ -47,39 +45,39 @@ Arquivos centrais:
 - `bin/liz/liz mini.html`
 - `bin/liz/Liz imagina.html`
 
-### 4. Camada serverless
+### 4. Camada de serviços internos
 
-Responsável por aplicar regras de segurança, validação, controle de abuso e operações assíncronas.
+Responsável por aplicar regras de execução, segurança funcional, validação e processamento complementar da aplicação.
 
 Arquivos centrais:
 
-- `supabase/functions/chat-worker/index.ts`
-- `supabase/functions/image-proxy/index.ts`
-- `supabase/functions/database-proxy/index.ts`
-- `supabase/functions/_shared/security.ts`
+- `functions/chat-worker`
+- `functions/image-worker`
+- `functions/app-gateway`
+- `functions/security-core`
 
 ## Características arquiteturais
 
 ### Modularidade
 
-A aplicação é separada por domínio funcional. Chat, imagens, comunidade, autenticação e assinaturas possuem blocos próprios de código e interface.
+A aplicação é dividida por domínios de experiência. Conversa, recursos visuais, comunidade, autenticação e assinatura possuem fronteiras próprias dentro do projeto.
 
 ### Escalabilidade operacional
 
-As rotas serverless permitem crescer por função, reduzindo acoplamento entre a interface e tarefas mais sensíveis.
+As responsabilidades sensíveis e de maior custo operacional ficam desacopladas da interface principal, o que favorece manutenção e evolução do produto.
 
-### Evolução incremental
+### Continuidade de produto
 
-O sistema permite introduzir melhorias sem reescrever toda a base, o que favorece manutenção contínua.
+O desenho atual permite refinar comportamento, visual e lógica interna sem necessidade de reestruturação completa da aplicação.
 
 ## Resumo técnico
 
 A Liz foi estruturada para equilibrar:
 
-- experiência direta no navegador
-- flexibilidade de personas
-- processamento remoto controlado
-- proteção operacional para recursos mais sensíveis
+- experiência fluida no navegador
+- identidade própria da assistente
+- organização modular
+- proteção operacional nas rotinas mais sensíveis
 
 ## Navegação
 

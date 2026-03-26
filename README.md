@@ -14,16 +14,25 @@ Esta pasta reúne a documentação técnica oficial da Liz Brasil em formato Mar
 
 ## Escopo desta versão
 
-Esta edição foi preparada para descrever a aplicação Liz Brasil sem expor detalhes de infraestrutura sensível ligados a banco de dados ou plataforma de pagamento.
+Esta edição foi preparada para circulação institucional e leitura pública controlada. Por isso, ela descreve a estrutura da aplicação em nível técnico sem expor detalhes internos sensíveis.
 
 O foco está em:
 
 - arquitetura da aplicação
-- integração com IA
-- organização do código
-- fluxo da mensagem do usuário
-- configuração operacional
-- segurança funcional, conformidade e experiência
+- integração com a Liz
+- organização dos módulos
+- fluxo da experiência do usuário
+- configuração operacional em alto nível
+- conformidade, segurança funcional e identidade do produto
+
+## Limites desta documentação
+
+Esta versão não detalha:
+
+- credenciais
+- segredos operacionais
+- fornecedores externos específicos
+- camadas internas sensíveis de infraestrutura
 
 ## Leitura recomendada
 
