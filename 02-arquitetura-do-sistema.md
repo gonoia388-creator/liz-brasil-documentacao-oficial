@@ -40,10 +40,10 @@ Responsável por encapsular modos internos da Liz e adaptar o comportamento da e
 
 Arquivos centrais:
 
-- `bin/liz-sdk.js`
-- `bin/liz/liz2.0.html`
-- `bin/liz/liz mini.html`
-- `bin/liz/Liz imagina.html`
+- `sdk-interno/core`
+- `modos/principal`
+- `modos/compacto`
+- `modos/visual`
 
 ### 4. Camada de serviços internos
 

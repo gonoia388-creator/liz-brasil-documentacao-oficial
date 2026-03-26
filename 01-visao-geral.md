@@ -27,9 +27,9 @@ A aplicação foi estruturada para:
 O repositório é organizado em blocos principais:
 
 - interface principal em HTML, CSS e JavaScript
-- SDK e personas da Liz em `bin/`
-- funções serverless em `supabase/functions/`
-- módulos auxiliares como comunidade, imagens, login e service worker
+- núcleo interno da Liz e modos de interação
+- camada de serviços internos da aplicação
+- módulos auxiliares como comunidade, recursos visuais, acesso e suporte offline
 
 ## Navegação
 

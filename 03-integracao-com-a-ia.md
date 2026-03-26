@@ -8,7 +8,7 @@ A Liz organiza sua experiência de IA por meio de modos internos, personas e ins
 
 ## Núcleo de interação
 
-O arquivo `bin/liz-sdk.js` atua como um núcleo de coordenação entre a interface principal e os modos internos da Liz. Em termos funcionais, ele:
+O serviço interno de orquestração atua como um núcleo de coordenação entre a interface principal e os modos internos da Liz. Em termos funcionais, ele:
 
 - seleciona o modo apropriado
 - encaminha a mensagem do usuário
@@ -17,7 +17,7 @@ O arquivo `bin/liz-sdk.js` atua como um núcleo de coordenação entre a interfa
 
 ## Modos internos da Liz
 
-Os arquivos em `bin/liz/` representam variações internas da experiência da Liz. Esses módulos permitem separar comportamentos por perfil de uso, profundidade de resposta e recursos especializados.
+Os módulos internos encapsulados representam variações da experiência da Liz. Esses módulos permitem separar comportamentos por perfil de uso, profundidade de resposta e recursos especializados.
 
 Exemplos de modos observáveis:
 

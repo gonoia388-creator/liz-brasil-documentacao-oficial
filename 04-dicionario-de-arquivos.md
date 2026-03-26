@@ -15,11 +15,6 @@ Esta tabela cobre os arquivos mais relevantes da aplicação em nível seguro de
 | `js/config.js` | Configurações públicas da aplicação | módulos do frontend |
 | `js/script.js` | Orquestração principal da aplicação | `window.liz`, módulos auxiliares, interface |
 | `js/images.js` | Fluxo dos recursos visuais e galeria | UI de imagens, camada de aplicação |
-| `js/turso.js` | Ponte interna de operações do app | camada de aplicação, rotinas protegidas |
-| `bin/liz-sdk.js` | Núcleo interno de coordenação da Liz | `postMessage`, iframes, runtime web |
-| `bin/liz/liz2.0.html` | Modo principal da Liz | núcleo interno da Liz |
-| `bin/liz/liz mini.html` | Modo compacto da Liz | núcleo interno da Liz |
-| `bin/liz/Liz imagina.html` | Modo visual da Liz | núcleo interno da Liz |
 | `components/sidebar.html` | Estrutura da navegação lateral | estilos e scripts da interface |
 | `components/input-area.html` | Área de entrada da mensagem | eventos de UI |
 | `components/persona.html` | Estrutura visual de seleção de modo | scripts da interface |
@@ -47,9 +42,7 @@ Para entender a aplicação de ponta a ponta, a sequência mais eficiente é:
 
 1. `index.html`
 2. `js/script.js`
-3. `bin/liz-sdk.js`
-4. `bin/liz/`
-5. `functions/`
+3. `functions/`
 
 ## Navegação
 
