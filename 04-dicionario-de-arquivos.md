@@ -1,49 +1,67 @@
-# Dicionário de Arquivos
+﻿# Dicionario de Arquivos
 
-[Voltar ao índice](./README.md) | [Anterior: Integração com a IA](./03-integracao-com-a-ia.md) | [Próximo: Fluxo de Dados](./05-fluxo-de-dados.md)
+[Voltar ao indice](./README.md) | [Anterior: Integracao com a IA](./03-integracao-com-a-ia.md) | [Proximo: Fluxo de Dados](./05-fluxo-de-dados.md)
 
-## Critério desta seção
+## Criterio desta secao
 
-Esta tabela cobre os arquivos mais relevantes da aplicação em nível seguro de documentação pública. Nomes técnicos internos são preservados apenas quando ajudam a localizar o módulo no repositório.
+Mapa objetivo dos arquivos principais em uso no projeto atual, com foco em manutencao e impacto de mudanca.
 
-| Nome do Arquivo | Responsabilidade Principal | Dependências Chave |
-|---|---|---|
-| `index.html` | Entrada principal da aplicação no navegador | `js/script.js`, `js/config.js`, `components/`, `css/` |
-| `app.html` | Variante operacional da interface principal | `js/script.js`, `js/config.js`, `css/` |
-| `convite.html` | Experiência de convite e aquisição | scripts de interface, componentes visuais |
-| `sw.js` | Service worker para suporte operacional e notificações | APIs do navegador |
-| `js/config.js` | Configurações públicas da aplicação | módulos do frontend |
-| `js/script.js` | Orquestração principal da aplicação | `window.liz`, módulos auxiliares, interface |
-| `js/images.js` | Fluxo dos recursos visuais e galeria | UI de imagens, camada de aplicação |
-| `components/sidebar.html` | Estrutura da navegação lateral | estilos e scripts da interface |
-| `components/input-area.html` | Área de entrada da mensagem | eventos de UI |
-| `components/persona.html` | Estrutura visual de seleção de modo | scripts da interface |
-| `css/staly.css` | Estilo global principal | layout base da aplicação |
-| `css/sidebar.css` | Estilo da barra lateral e atalhos | componentes da sidebar |
-| `css/images.css` | Estilo dos recursos visuais | galeria e painéis visuais |
-| `css/settings.css` | Estilo da área de configurações | painel de ajustes |
-| `css/modes.css` | Estilo dos modos da Liz | cartões e seletores de modo |
-| `Liz Comunidade/community.html` | Interface da comunidade | `community.js`, estilos |
-| `Liz Comunidade/community.js` | Lógica de interação da comunidade | módulos da comunidade |
-| `Liz Comunidade/banco de dados/comunidade.js` | Camada interna de suporte da comunidade | rotinas protegidas da aplicação |
-| `loguin/index.html` | Tela de acesso do usuário | scripts de login |
-| `loguin/login.js` | Lógica de autenticação no cliente | camada de autenticação da aplicação |
-| `loguin/register.html` | Tela de cadastro | interface e scripts de acesso |
-| `loguin/register.js` | Fluxo de criação de conta no cliente | autenticação e perfil do usuário |
-| `assinaturas/assinaturas.js` | Fluxo visual do painel de assinatura | interface, sessão e estado do usuário |
-| `functions/chat-worker` | Processamento complementar de mensagens | validação, autenticação, rotinas internas |
-| `functions/image-worker` | Processamento complementar visual | validação, controle de uso, rotinas internas |
-| `functions/app-gateway` | Operações fechadas da aplicação | validação, regras de acesso |
-| `functions/security-core` | Utilitários compartilhados de segurança | autenticação, origem permitida, controle de abuso |
+## Frontend (principal)
 
-## Leitura recomendada
+| Arquivo | Responsabilidade |
+|---|---|
+| `frontend/public/index.html` | Estrutura principal da aplicacao web |
+| `frontend/public/login.html` | Tela de autenticacao |
+| `frontend/public/register.html` | Tela de cadastro |
+| `frontend/src/js/main.js` | Bootstrap da aplicacao e inicializacao de modulos |
+| `frontend/src/js/ui.js` | Estado de interface, navegacao, modais e interacoes visuais |
+| `frontend/src/js/chat.js` | Fluxo de chat, historico, render e stream |
+| `frontend/src/js/auth.js` | Sessao, login/logout, guardas de autenticacao |
+| `frontend/src/js/api.js` | Cliente HTTP e camada de acesso a API |
+| `frontend/src/js/markdown.js` | Parse/render de markdown e blocos de codigo |
+| `frontend/src/js/help.js` | Fluxos da area de ajuda |
+| `frontend/src/js/login.js` | Comportamento da pagina de login |
+| `frontend/src/js/register.js` | Comportamento da pagina de cadastro |
+| `frontend/src/styles/variables.css` | Tokens visuais (cores, espacamentos, tema) |
+| `frontend/src/styles/layout.css` | Estrutura de layout e import do CSS base |
+| `frontend/src/styles/components.css` | Componentes de UI (chat, modais, listas, etc.) |
+| `frontend/src/styles/login.css` | Estilo da pagina de login |
+| `frontend/src/styles/register.css` | Estilo da pagina de cadastro |
 
-Para entender a aplicação de ponta a ponta, a sequência mais eficiente é:
+## Backend (principal)
 
-1. `index.html`
-2. `js/script.js`
-3. `functions/`
+| Arquivo | Responsabilidade |
+|---|---|
+| `backend/app/main.py` | Criacao da app FastAPI, middlewares, handlers globais e health checks |
+| `backend/app/routes/auth.py` | Endpoints de cadastro, login, refresh e logout |
+| `backend/app/routes/users.py` | Endpoints de perfil e atividade do usuario |
+| `backend/app/routes/chat.py` | Endpoints de envio de mensagem, stream e historico |
+| `backend/app/routes/settings.py` | Endpoints de leitura/escrita de configuracoes |
+| `backend/app/controllers/*.py` | Adaptacao da rota para servicos |
+| `backend/app/services/auth_service.py` | Regras de autenticacao e tokens |
+| `backend/app/services/chat_service.py` | Regras de chat, persistencia e stream NDJSON |
+| `backend/app/services/ai_service.py` | Integracao externa de IA e fallback |
+| `backend/app/services/user_service.py` | Perfil do usuario |
+| `backend/app/services/activity_service.py` | Estatisticas de atividade |
+| `backend/app/schemas/*.py` | Contratos de request/response com Pydantic |
+| `backend/app/middlewares/*.py` | Auth middleware, CORS e logs |
+| `backend/app/utils/security.py` | Funcoes de seguranca, rate limit e suporte a chat |
+| `backend/app/utils/validators.py` | Validadores de entrada |
+| `backend/app/core/config.py` | Leitura de configuracoes por ambiente |
 
-## Navegação
+## Operacao local
 
-[Próximo: Fluxo de Dados](./05-fluxo-de-dados.md)
+| Arquivo | Responsabilidade |
+|---|---|
+| `start-liz.cmd` | Inicializacao local (wrapper) |
+| `local-start.ps1` | Sobe frontend + backend e valida readiness |
+| `stop-liz.cmd` | Encerramento local |
+| `local-stop.ps1` | Para processos e limpa estado de execucao |
+
+## Observacao de manutencao
+
+Antes de alterar qualquer fluxo principal (auth, chat, perfil, settings), revisar este dicionario e validar impacto cruzado front-back.
+
+## Navegacao
+
+[Proximo: Fluxo de Dados](./05-fluxo-de-dados.md)

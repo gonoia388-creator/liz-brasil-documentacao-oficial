@@ -1,66 +1,75 @@
-# Integração com a IA
+﻿# Integracao com a IA
 
-[Voltar ao índice](./README.md) | [Anterior: Arquitetura do Sistema](./02-arquitetura-do-sistema.md) | [Próximo: Dicionário de Arquivos](./04-dicionario-de-arquivos.md)
+[Voltar ao indice](./README.md) | [Anterior: Arquitetura do Sistema](./02-arquitetura-do-sistema.md) | [Proximo: Dicionario de Arquivos](./04-dicionario-de-arquivos.md)
 
-## Visão geral
+## Objetivo desta camada
 
-A Liz organiza sua experiência de IA por meio de modos internos, personas e instruções contextuais. O sistema combina identidade da assistente, contexto recente e objetivo da interação para produzir respostas coerentes com a proposta do produto.
+A camada de IA transforma uma mensagem do usuario em resposta assistida, respeitando o modelo selecionado e o contexto da conversa.
 
-## Núcleo de interação
+## Modelos suportados no codigo atual
 
-O serviço interno de orquestração atua como um núcleo de coordenação entre a interface principal e os modos internos da Liz. Em termos funcionais, ele:
+- `mini`
+- `2.3`
+- `2.5`
 
-- seleciona o modo apropriado
-- encaminha a mensagem do usuário
-- organiza o contexto da interação
-- devolve a resposta para a camada visual
+A selecao de modelo chega no backend via payload de chat e e normalizada antes da chamada externa.
 
-## Modos internos da Liz
+## Endpoints de chat
 
-Os módulos internos encapsulados representam variações da experiência da Liz. Esses módulos permitem separar comportamentos por perfil de uso, profundidade de resposta e recursos especializados.
+### 1) Resposta tradicional
 
-Exemplos de modos observáveis:
+`POST /api/v1/chat/messages`
 
-- modo principal
-- modo compacto
-- modo visual
+- salva mensagem do usuario;
+- gera resposta do assistente;
+- persiste a resposta;
+- retorna `user_message` e `assistant_message`.
 
-## Construção do contexto
+### 2) Resposta em streaming
 
-O comportamento da Liz é composto em camadas:
+`POST /api/v1/chat/messages/stream`
 
-1. identidade-base da assistente
-2. instruções contextuais do fluxo atual
-3. histórico recente de conversa
-4. ajustes de modo e experiência
+- retorna `application/x-ndjson`;
+- eventos: `meta`, `chunk`, `done`;
+- permite renderizacao progressiva no frontend.
 
-Esse modelo favorece consistência sem perder adaptação ao uso real.
+## Estrutura do payload de entrada
 
-## Identidade de resposta
+Campos principais:
 
-No projeto, a Liz é orientada para responder com:
+- `message` (obrigatorio)
+- `conversation_id` (opcional)
+- `attachments` (lista)
+- `model` (`mini`, `2.3`, `2.5`)
 
-- clareza
-- equilíbrio entre profundidade e objetividade
-- foco em utilidade prática
-- linguagem acolhedora
-- coerência com o português do Brasil
+Validacoes relevantes:
 
-## Processamento complementar
+- mensagem vazia e rejeitada;
+- `conversation_id` passa por validacao;
+- anexos passam por normalizacao;
+- campos extras nao permitidos.
 
-Em fluxos mais longos ou mais sensíveis, a aplicação pode acionar rotinas internas de apoio para manter estabilidade, continuidade e segurança funcional.
+## Fallback operacional
 
-## Exemplo conceitual de uso
+Quando a IA externa nao responde, o sistema retorna mensagem de fallback controlada. Isso evita quebra da UX e preserva previsibilidade para o usuario.
 
-```js
-const reply = await window.liz.chat({
-  message: userMessage,
-  persona: activePersona,
-  customPrompt: currentInstructions,
-  history: conversationHistory
-})
-```
+## Rate limit e protecao
 
-## Navegação
+Antes de processar chat, o backend aplica limite de requisicoes por janela de tempo para reduzir abuso.
 
-[Próximo: Dicionário de Arquivos](./04-dicionario-de-arquivos.md)
+## Integracao no frontend
+
+- `frontend/src/js/chat.js`: fluxo de envio e renderizacao;
+- `frontend/src/js/api.js`: chamadas para endpoint tradicional e stream;
+- `frontend/src/js/markdown.js`: render de conteudo estruturado (incluindo blocos de codigo).
+
+## Pontos de evolucao recomendados
+
+1. melhorar tratamento de timeout e retries.
+2. adicionar telemetria de latencia por modelo.
+3. versionar contrato de stream para compatibilidade futura.
+4. separar claramente resposta final de mensagens de status internas.
+
+## Navegacao
+
+[Proximo: Dicionario de Arquivos](./04-dicionario-de-arquivos.md)

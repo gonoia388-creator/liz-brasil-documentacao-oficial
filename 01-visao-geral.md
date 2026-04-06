@@ -1,36 +1,46 @@
-# Visão Geral
+﻿# Visao Geral
 
-[Voltar ao índice](./README.md) | [Próximo: Arquitetura do Sistema](./02-arquitetura-do-sistema.md)
+[Voltar ao indice](./README.md) | [Proximo: Arquitetura do Sistema](./02-arquitetura-do-sistema.md)
 
-## Propósito
+## Proposito
 
-A Liz Brasil é uma aplicação de inteligência artificial voltada para interação em linguagem natural com foco em clareza, acolhimento e utilidade prática. A experiência combina interface web, personas especializadas e uma camada serverless para tarefas operacionais e de segurança.
+A Liz Brasil e uma aplicacao de assistencia por IA com foco em produtividade, clareza e fluxo continuo de trabalho. O produto combina chat, historico, configuracoes de experiencia, modos de modelo e recursos visuais em uma interface unica para desktop e mobile.
 
-## Direção do produto
+## Objetivos do produto
 
-A aplicação foi estruturada para:
+- entregar resposta util com latencia previsivel;
+- manter UX consistente em tema escuro/claro e variacoes de enfase;
+- permitir evolucao modular sem quebrar o front;
+- oferecer base segura para autenticacao, perfil e preferencias;
+- suportar resposta padrao e resposta em streaming.
 
-- oferecer conversas fluidas em português do Brasil
-- adaptar a resposta conforme modo, contexto e persona
-- manter uma experiência responsiva em desktop e mobile
-- sustentar recursos como geração de imagens, modos especializados e processamento assíncrono
+## Estado atual (codigo)
 
-## Princípios observados no código
+- Frontend: HTML, CSS e JavaScript modular (sem framework pesado).
+- Backend: Python + FastAPI com rotas versionadas em `/api/v1`.
+- Chat: envio tradicional e modo stream (`/chat/messages/stream`).
+- Persistencia de UI: configuracoes gerais no navegador (MVP local).
+- Seguranca: validacao de schema, middlewares, cabecalhos e controle de acesso por token.
 
-- separação entre interface, lógica de orquestração e serviços serverless
-- personalização da IA por persona e instruções contextuais
-- proteção por autenticação, validação de payload e controle de abuso
-- experiência de uso pensada para continuidade, clareza e tom humano
+## Principios tecnicos
 
-## Estrutura macro
+1. Separacao de responsabilidades por camada.
+2. Contrato estavel entre frontend e backend.
+3. Fallback seguro quando o provedor de IA estiver indisponivel.
+4. Protecao contra entrada invalida e abuso de requests.
+5. Observabilidade basica por logs e health checks.
 
-O repositório é organizado em blocos principais:
+## Estrutura macro do repositorio
 
-- interface principal em HTML, CSS e JavaScript
-- núcleo interno da Liz e modos de interação
-- camada de serviços internos da aplicação
-- módulos auxiliares como comunidade, recursos visuais, acesso e suporte offline
+- `frontend/`: interface, estilos e logica de UX.
+- `backend/`: API, regras de negocio, autenticacao e servicos.
+- `docs/`: documentacao operacional interna do projeto.
+- `liz-brasil-documentacao-oficial-main/`: pacote de documentacao institucional.
 
-## Navegação
+## O que esta fora deste capitulo
 
-[Próximo: Arquitetura do Sistema](./02-arquitetura-do-sistema.md)
+Este documento nao entra em detalhes de payload, contratos de cada rota e procedimentos de deploy. Esses pontos estao distribuidos nos capitulos seguintes.
+
+## Navegacao
+
+[Proximo: Arquitetura do Sistema](./02-arquitetura-do-sistema.md)

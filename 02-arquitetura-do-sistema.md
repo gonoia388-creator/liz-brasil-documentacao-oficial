@@ -1,84 +1,87 @@
-# Arquitetura do Sistema
+﻿# Arquitetura do Sistema
 
-[Voltar ao índice](./README.md) | [Anterior: Visão Geral](./01-visao-geral.md) | [Próximo: Integração com a IA](./03-integracao-com-a-ia.md)
+[Voltar ao indice](./README.md) | [Anterior: Visao Geral](./01-visao-geral.md) | [Proximo: Integracao com a IA](./03-integracao-com-a-ia.md)
 
-## Classificação arquitetural
+## Visao arquitetural
 
-A Liz Brasil segue uma arquitetura híbrida e modular, composta por:
+A Liz Brasil adota arquitetura em camadas com fronteiras claras entre UX, API e servicos de negocio.
 
-- frontend web com experiência de aplicação rica
-- camada de orquestração em JavaScript
-- serviços internos de apoio à execução
-- módulos especializados da Liz para diferentes modos de interação
-
-Essa topologia prioriza separação de responsabilidades, evolução incremental e controle operacional.
+```text
+Usuario -> Frontend (UI) -> API Client -> FastAPI -> Controllers -> Services -> Provedor externo
+```
 
 ## Camadas principais
 
-### 1. Camada de experiência
+### 1. Camada de experiencia (Frontend)
 
-Responsável pela interface visível ao usuário, navegação, painéis, interações e apresentação do conteúdo.
+Responsavel por navegacao, layout, chat, modais (perfil, atividade, configuracoes), historico e renderizacao de markdown/codigo.
 
-Arquivos centrais:
+Arquivos-chave:
 
-- `index.html`
-- `app.html`
-- `css/`
-- `components/`
+- `frontend/public/index.html`
+- `frontend/src/js/main.js`
+- `frontend/src/js/ui.js`
+- `frontend/src/js/chat.js`
+- `frontend/src/js/auth.js`
+- `frontend/src/js/api.js`
+- `frontend/src/js/markdown.js`
+- `frontend/src/styles/*.css`
 
-### 2. Camada de orquestração
+### 2. Camada de API (FastAPI)
 
-Responsável por coordenar sessão, interface, mensagens, modos da Liz e atualização do estado da aplicação.
+Responsavel por receber requests, validar payloads, autenticar usuario, aplicar regras de negocio e responder com contrato consistente.
 
-Arquivo central:
+Arquivos-chave:
 
-- `js/script.js`
+- `backend/app/main.py`
+- `backend/app/routes/*.py`
+- `backend/app/controllers/*.py`
+- `backend/app/schemas/*.py`
 
-### 3. Camada de núcleo conversacional
+### 3. Camada de servicos
 
-Responsável por encapsular modos internos da Liz e adaptar o comportamento da experiência conforme persona, contexto e objetivo.
+Responsavel por autenticao, chat, geracao de resposta, atividade e perfil.
 
-Arquivos centrais:
+Arquivos-chave:
 
-- `sdk-interno/core`
-- `modos/principal`
-- `modos/compacto`
-- `modos/visual`
+- `backend/app/services/auth_service.py`
+- `backend/app/services/chat_service.py`
+- `backend/app/services/ai_service.py`
+- `backend/app/services/user_service.py`
+- `backend/app/services/activity_service.py`
 
-### 4. Camada de serviços internos
+### 4. Camada transversal de seguranca
 
-Responsável por aplicar regras de execução, segurança funcional, validação e processamento complementar da aplicação.
+Responsavel por validacoes, headers, rate limit, middleware de auth e utilitarios de seguranca.
 
-Arquivos centrais:
+Arquivos-chave:
 
-- `functions/chat-worker`
-- `functions/image-worker`
-- `functions/app-gateway`
-- `functions/security-core`
+- `backend/app/middlewares/auth_middleware.py`
+- `backend/app/middlewares/log_middleware.py`
+- `backend/app/utils/security.py`
+- `backend/app/utils/validators.py`
 
-## Características arquiteturais
+## Rotas de alto nivel
 
-### Modularidade
+- Auth: `/api/v1/auth/*`
+- Usuario: `/api/v1/users/*`
+- Chat: `/api/v1/chat/*`
+- Configuracoes: `/api/v1/settings`
+- Health: `/health/live` e `/health/ready`
 
-A aplicação é dividida por domínios de experiência. Conversa, recursos visuais, comunidade, autenticação e assinatura possuem fronteiras próprias dentro do projeto.
+## Decisoes de projeto importantes
 
-### Escalabilidade operacional
+1. **Schemas com validacao forte**: requests com campos extras sao rejeitados.
+2. **Streaming opcional**: mesma experiencia de chat com endpoint dedicado para resposta progressiva.
+3. **Modularidade**: UI e API evoluem em modulos, reduzindo risco de regressao.
+4. **Fallback de IA**: sistema nao quebra se o provedor estiver fora.
 
-As responsabilidades sensíveis e de maior custo operacional ficam desacopladas da interface principal, o que favorece manutenção e evolução do produto.
+## Riscos conhecidos
 
-### Continuidade de produto
+- Dependencia de provedores externos pode elevar latencia.
+- Estado local no frontend requer cuidado ao sincronizar com backend.
+- Alteracoes de contrato exigem validacao end-to-end.
 
-O desenho atual permite refinar comportamento, visual e lógica interna sem necessidade de reestruturação completa da aplicação.
+## Navegacao
 
-## Resumo técnico
-
-A Liz foi estruturada para equilibrar:
-
-- experiência fluida no navegador
-- identidade própria da assistente
-- organização modular
-- proteção operacional nas rotinas mais sensíveis
-
-## Navegação
-
-[Próximo: Integração com a IA](./03-integracao-com-a-ia.md)
+[Proximo: Integracao com a IA](./03-integracao-com-a-ia.md)

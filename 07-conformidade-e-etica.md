@@ -1,55 +1,68 @@
-# Conformidade e Ética
+﻿# Conformidade e Etica
 
-[Voltar ao índice](./README.md) | [Anterior: Guia de Configuração](./06-guia-de-configuracao.md)
+[Voltar ao indice](./README.md) | [Anterior: Guia de Configuracao](./06-guia-de-configuracao.md)
 
-## Direção de conformidade
+## Diretrizes de conformidade
 
-A Liz foi pensada para operar com foco em segurança funcional, proteção do usuário e previsibilidade de comportamento. Nesta edição documental, a conformidade é descrita sob a ótica da aplicação, da experiência e das camadas de proteção observáveis no código.
+A Liz Brasil adota um conjunto de praticas para manter seguranca funcional, previsibilidade operacional e respeito ao usuario.
 
-## Práticas observáveis
+## Controles tecnicos observaveis
 
-### 1. Minimização de exposição
+### 1. Validacao de entrada
 
-A aplicação separa frontend e operações sensíveis, reduzindo a necessidade de lógica crítica diretamente no navegador.
+- schemas com restricao de tipos e tamanhos;
+- campos extras proibidos em requests sensiveis;
+- normalizacao de email, username, avatar e mensagem.
 
-### 2. Validação de entrada
+### 2. Controle de acesso
 
-As funções serverless utilizam validação de payload para rejeitar estruturas inválidas, incompletas ou abusivas.
+- rotas protegidas exigem autenticacao;
+- operacoes de perfil e historico vinculadas ao usuario autenticado;
+- ownership de conversa validado antes de leitura/escrita.
 
-### 3. Proteção contra abuso
+### 3. Reducao de abuso
 
-O backend aplica controles de uso para reduzir spam, automação agressiva e consumo indevido de recursos.
+- limitacao de taxa no fluxo de chat;
+- bloqueio de payloads invalidos;
+- resposta controlada em cenarios de erro.
 
-### 4. Tratamento seguro de erros
+### 4. Tratamento de erro seguro
 
-O fluxo busca evitar exposição indevida de detalhes internos, priorizando respostas controladas ao cliente.
+- erros com formato padronizado;
+- inclusao de request id para rastreabilidade;
+- mensagens sem vazamento de detalhes sensiveis.
 
-## Ética de produto
+### 5. Higiene de segredos
 
-O comportamento da Liz é orientado para:
+- credenciais devem ficar em variaveis de ambiente;
+- segredos nao devem ser versionados;
+- rotacao obrigatoria em caso de exposicao.
 
-- acolhimento
-- clareza
-- respeito ao contexto do usuário
-- linguagem acessível
-- foco em ajuda real, sem agressividade ou frieza desnecessária
+## Etica de produto
 
-## Tom de voz
+A Liz deve responder com:
 
-O tom de voz é influenciado pelas personas e pelas instruções contextuais do sistema. Na prática, isso sustenta uma identidade que busca:
+- clareza e utilidade pratica;
+- linguagem respeitosa e acessivel;
+- neutralidade em situacoes sensiveis;
+- transparencia sobre limites tecnicos quando necessario.
 
-- responder de forma humana
-- organizar ideias com clareza
-- evitar excesso de formalismo quando não for útil
-- manter utilidade prática acima de ornamentação
+## Politica de comunicacao
 
-## Conclusão
+1. Nao inventar acesso que nao existe.
+2. Nao ocultar falhas criticas.
+3. Priorizar seguranca sobre conveniencia quando houver conflito.
+4. Preservar contexto sem expor dados indevidos.
 
-Esta documentação registra uma Liz orientada por:
+## Risco e responsabilidade
 
-- experiência amigável
-- proteção funcional
-- modularidade técnica
-- integração consistente com IA
+Toda alteracao em auth, chat, perfil e settings deve passar por:
 
-Ela foi organizada para servir como base oficial de leitura da aplicação sem expor detalhes de infraestrutura fora do escopo solicitado.
+- validacao tecnica;
+- revisao de impacto front-back;
+- checklist minimo de seguranca;
+- documentacao da mudanca.
+
+## Conclusao
+
+A conformidade da Liz Brasil depende de disciplina operacional continua: contrato estavel, validacao forte, manejo correto de segredos e evolucao de UX sem comprometer seguranca.
